@@ -322,6 +322,37 @@
   .review-entry b { color: var(--teal-bright); }
   .review-entry .stars-static { color: var(--slime); font-size: 0.85rem; letter-spacing: 2px; }
   .empty-note { color: rgba(244,242,234,0.5); font-size: 0.85rem; }
+  
+  .confirm-modal { text-align: center; }
+.confirm-emoji { font-size: 2.2rem; margin: 0 0 4px; }
+.confirm-h3 {
+  font-family: var(--font-display); font-weight: 700; font-size: 1.3rem;
+  color: var(--teal-bright); margin: 0 0 8px;
+}
+.confirm-order-num {
+  font-family: var(--font-mono); font-weight: 700; font-size: 1.05rem;
+  color: var(--slime); background: rgba(180,240,28,0.1); border: 1px dashed var(--slime);
+  border-radius: 8px; padding: 8px; margin: 0 0 18px; letter-spacing: 0.04em;
+}
+.confirm-block { text-align: left; margin-bottom: 14px; }
+.confirm-label {
+  font-family: var(--font-display); font-weight: 600; font-size: 0.85rem;
+  color: var(--purple-light); margin: 0 0 3px;
+}
+.confirm-text { font-family: var(--font-body); font-size: 0.9rem; color: var(--paper); margin: 0; }
+.confirm-quote-block {
+  background: rgba(124,58,237,0.12); border-left: 3px solid var(--purple);
+  padding: 10px 14px; border-radius: 6px; margin-top: 16px;
+}
+.confirm-quote {
+  font-family: var(--font-body); font-style: italic; font-size: 0.88rem;
+  color: var(--purple-light); margin: 0; line-height: 1.5;
+}
+.confirm-footer {
+  font-size: 0.78rem; color: rgba(244,242,234,0.55); margin: 18px 0 14px;
+}
+.confirm-close-btn { width: 100%; }
+
 
   footer.site-footer { text-align: center; margin-top: 50px; font-size: 0.78rem; color: rgba(244,242,234,0.4); font-family: var(--font-body); }
 
@@ -798,40 +829,36 @@ randomBtn.addEventListener('click', () => {
 
 // ---------- Checkout modal ----------
 const checkoutModal = document.getElementById('checkout-modal');
-const checkoutForm = document.getElementById('checkout-form');
-document.getElementById('checkout-cancel').addEventListener('click', () => checkoutModal.classList.remove('open'));
-checkoutBtn.addEventListener('click', () => {
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('c-pickup').min = today;
-  checkoutModal.classList.add('open');
-});
-checkoutForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const name = document.getElementById('c-name').value.trim();
-  const email = document.getElementById('c-email').value.trim();
-  const pickup = document.getElementById('c-pickup').value;
-  const pickupDate = new Date(pickup + 'T00:00:00');
-  const returnDate = new Date(pickupDate);
-  returnDate.setDate(returnDate.getDate() + 5);
-  const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+.confirm-modal { text-align: center; }
+.confirm-emoji { font-size: 2.2rem; margin: 0 0 4px; }
+.confirm-h3 {
+  font-family: var(--font-display); font-weight: 700; font-size: 1.3rem;
+  color: var(--teal-bright); margin: 0 0 8px;
+}
+.confirm-order-num {
+  font-family: var(--font-mono); font-weight: 700; font-size: 1.05rem;
+  color: var(--slime); background: rgba(180,240,28,0.1); border: 1px dashed var(--slime);
+  border-radius: 8px; padding: 8px; margin: 0 0 18px; letter-spacing: 0.04em;
+}
+.confirm-block { text-align: left; margin-bottom: 14px; }
+.confirm-label {
+  font-family: var(--font-display); font-weight: 600; font-size: 0.85rem;
+  color: var(--purple-light); margin: 0 0 3px;
+}
+.confirm-text { font-family: var(--font-body); font-size: 0.9rem; color: var(--paper); margin: 0; }
+.confirm-quote-block {
+  background: rgba(124,58,237,0.12); border-left: 3px solid var(--purple);
+  padding: 10px 14px; border-radius: 6px; margin-top: 16px;
+}
+.confirm-quote {
+  font-family: var(--font-body); font-style: italic; font-size: 0.88rem;
+  color: var(--purple-light); margin: 0; line-height: 1.5;
+}
+.confirm-footer {
+  font-size: 0.78rem; color: rgba(244,242,234,0.55); margin: 18px 0 14px;
+}
+.confirm-close-btn { width: 100%; }
 
-  const lines = cart.map(i => `- ${i.title}${i.year ? ' (' + i.year + ')' : ''}`).join('\n');
-  const body =
-`New Wizards Rewind rental request
-
-From: ${name} (${email})
-Pickup date: ${fmt(pickupDate)}
-Return by: ${fmt(returnDate)}
-Meet at: Santa Cruz River Park trail, where W Colorado St meets N Riverside
-
-Tapes requested:
-${lines}
-`;
-  const subject = `Wizards Rewind request from ${name} — pickup ${pickup}`;
-  const mailto = `mailto:${OWNER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  window.location.href = mailto;
-  checkoutModal.classList.remove('open');
-});
 
 // ---------- Reviews modal ----------
 const reviewModal = document.getElementById('review-modal');
